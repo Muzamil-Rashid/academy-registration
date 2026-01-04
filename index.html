@@ -45,12 +45,31 @@
           font-weight: bold;
         }
 
+        .loader{
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          display: none;
+          border: 20px solid #FFE66D;
+          border-top: 20px solid #4ECDC4;
+          animation: spin 1s ease-in 0s infinite normal;
+          }
+          
+        @keyframes spin{
+          from{
+            transform: rotate(0deg);
+          }
+          to{
+            transform: rotate(360deg);
+          }
+        }
+
   </style>
 </head>
 <body>
 <div class="container">
   <br>
-  <a href="https://ibb.co/6RY9ZH9c"><img src="https://i.ibb.co/6RY9ZH9c/IMG-0299-removebg-preview.png" alt="IMG-0299-removebg-preview" border="0" /></a>
+  <a href="https://imgbb.com/"><img src="https://i.ibb.co/TBWtz4Jz/IMG-20260104-123634.png" width="40%" height="auto" alt="IMG 20260104 123634" border="0"></a>
   <h2 style="color: blue;">SMBT Student Registration</h2>
   <br>
   <label>Name:</label>
@@ -63,6 +82,12 @@
   <input id="date" type="date" placeholder="dd/mm/yyyy">
 
   <button id="registerBtn">Register</button>
+
+   
+  
+   <center
+   <div class="loader"></div> 
+   </center>
 </div>
 
 <script>
@@ -75,12 +100,20 @@
     if (!name || !phone || !date) {
       alert("Please fill all fields!");
       return;
+
     }
     const payload = { name, phone, date };
     try {
+      setTimeout(() => {
+        document.querySelector(".loader").style.display = "block";
+      });
       const res = await fetch(scriptURL, { method: "POST", body: JSON.stringify(payload) });
       const result = await res.json();
-      if (result.status === "success") alert("Student registered successfully!");
+      setTimeout(() => {
+        document.querySelector(".loader").style.display ="none";
+      }, 2000);
+      if (result.status === "success") 
+      alert("Student registered successfully!");
     } catch {
       alert("Registration failed!");
     }
